@@ -1,0 +1,11 @@
+app:
+ listenport: 127.0.0.1:3000
+ 
+db:
+ host: 127.0.0.1
+ port: 5432
+ dbname: DiplomDB
+ user: postgres
+ password: 1234
+ sslmode: disable
+ poolmaxconns: 1
