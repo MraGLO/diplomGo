@@ -261,7 +261,7 @@ func (d *DatabaseRepo) SelectAllRecordStudyPlans() (recordStudyPlans []model.Rec
 	return
 }
 
-func (d *DatabaseRepo) SelectRecorsStudyPlanByID(id int) (recordStudyPlan model.RecordStudyPlan, err error) {
+func (d *DatabaseRepo) SelectRecordStudyPlanByID(id int) (recordStudyPlan model.RecordStudyPlan, err error) {
 	rows, err := d.db.Query(context.Background(), "SELECT id, semester, subject_id, max_time, independent, consultations, required_time, lectures_and_lessons, practical_exercises, laboratory_exercises, seminars, course_project, intermediate_certification, study_plan_id FROM record_study_plan WHERE id = $1", id)
 	if err != nil {
 		return

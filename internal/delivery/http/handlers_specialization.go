@@ -8,19 +8,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h *Handlers) GetAllGroups(c *fiber.Ctx) error {
-	groups, err := h.services.GetAllGroups()
+func (h *Handlers) GetAllSpecializations(c *fiber.Ctx) error {
+	specializations, err := h.services.GetAllSpecialization()
 	if err != nil {
 		log.Println(err)
 		c.Status(500)
 		return c.JSON(model.Error{Data: "Невозможно обратиться к серверу"})
 
 	}
-	return c.JSON(groups)
+	return c.JSON(specializations)
 }
 
-func (h *Handlers) GetGroupsById(c *fiber.Ctx) error {
-	id, err := strconv.Atoi(c.Params("groupID"))
+func (h *Handlers) GetSpecializationById(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("specializationID"))
 	if err != nil {
 		log.Println(err)
 		c.Status(400)
@@ -33,18 +33,18 @@ func (h *Handlers) GetGroupsById(c *fiber.Ctx) error {
 		return c.JSON(model.Error{Data: "id не может быть меньше или равно 0"})
 	}
 
-	group, err := h.services.GetGroupByID(id)
+	specialization, err := h.services.GetSpecializationByID(id)
 	if err != nil {
 		log.Println(err)
 		c.Status(500)
 		return c.JSON(model.Error{Data: "Невозможно обратиться к серверу"})
 	}
 
-	if group.ID == 0 {
+	if specialization.ID == 0 {
 		log.Println(err)
 		c.Status(404)
 		return c.JSON(model.Error{Data: "Данных по данному id не существует"})
 	}
 
-	return c.JSON(group)
+	return c.JSON(specialization)
 }
