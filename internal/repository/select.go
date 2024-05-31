@@ -109,14 +109,14 @@ func (d *DatabaseRepo) SelectTeacherSubjectByID(id int) (teacherSubject model.Te
 
 func (d *DatabaseRepo) SelectAllGroups() (groups []model.Group, err error) {
 	var tmp model.Group
-	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_id, name, course, flow_id FROM group")
+	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_id, name, course FROM group")
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.SpecializationID, &tmp.Name, &tmp.Course, &tmp.FlowID)
+		err = rows.Scan(&tmp.ID, &tmp.SpecializationID, &tmp.Name, &tmp.Course)
 		if err != nil {
 			return
 		}
@@ -126,14 +126,14 @@ func (d *DatabaseRepo) SelectAllGroups() (groups []model.Group, err error) {
 }
 
 func (d *DatabaseRepo) SelectGroupByID(id int) (group model.Group, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_id, name, course, flow_id  FROM group WHERE id = $1", id)
+	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_id, name, course  FROM group WHERE id = $1", id)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&group.ID, &group.SpecializationID, &group.Name, &group.Course, &group.FlowID)
+		err = rows.Scan(&group.ID, &group.SpecializationID, &group.Name, &group.Course)
 		if err != nil {
 			return
 		}
@@ -168,142 +168,6 @@ func (d *DatabaseRepo) SelectSpecializationByID(id int) (specialization model.Sp
 
 	for rows.Next() {
 		err = rows.Scan(&specialization.ID, &specialization.SpecializationName, &specialization.QualificationName)
-		if err != nil {
-			return
-		}
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectAllFlows() (flows []model.Flow, err error) {
-	var tmp model.Flow
-	rows, err := d.db.Query(context.Background(), "SELECT id FROM flow")
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID)
-		if err != nil {
-			return
-		}
-		flows = append(flows, tmp)
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectFlowByID(id int) (flow model.Flow, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id FROM flow WHERE id = $1", id)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&flow.ID)
-		if err != nil {
-			return
-		}
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectAllStudyPlans() (studyPlans []model.StudyPlan, err error) {
-	var tmp model.StudyPlan
-	rows, err := d.db.Query(context.Background(), "SELECT id, flow_id FROM study_plan")
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.FlowID)
-		if err != nil {
-			return
-		}
-		studyPlans = append(studyPlans, tmp)
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectStudyPlanByID(id int) (studyPlan model.StudyPlan, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, flow_id FROM study_plan WHERE id = $1", id)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&studyPlan.ID, &studyPlan.FlowID)
-		if err != nil {
-			return
-		}
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectAllRecordStudyPlans() (recordStudyPlans []model.RecordStudyPlan, err error) {
-	var tmp model.RecordStudyPlan
-	rows, err := d.db.Query(context.Background(), "SELECT id, semester, subject_id, max_time, independent, consultations, required_time, lectures_and_lessons, practical_exercises, laboratory_exercises, seminars, course_project, intermediate_certification, study_plan_id FROM record_study_plan")
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.Semester, &tmp.SubjectID, &tmp.MaxTime, &tmp.Independet, &tmp.Consultations, &tmp.RequiredTime, &tmp.LecturesAndLessons, &tmp.PracticalExercises, &tmp.LaboratoryExercises, &tmp.Seminars, &tmp.CourseProject, &tmp.IntermediateCertification, &tmp.StudyPlanID)
-		if err != nil {
-			return
-		}
-		recordStudyPlans = append(recordStudyPlans, tmp)
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectRecordStudyPlanByID(id int) (recordStudyPlan model.RecordStudyPlan, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, semester, subject_id, max_time, independent, consultations, required_time, lectures_and_lessons, practical_exercises, laboratory_exercises, seminars, course_project, intermediate_certification, study_plan_id FROM record_study_plan WHERE id = $1", id)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&recordStudyPlan.ID, &recordStudyPlan.Semester, &recordStudyPlan.SubjectID, &recordStudyPlan.MaxTime, &recordStudyPlan.Independet, &recordStudyPlan.Consultations, &recordStudyPlan.RequiredTime, &recordStudyPlan.LecturesAndLessons, &recordStudyPlan.PracticalExercises, &recordStudyPlan.LaboratoryExercises, &recordStudyPlan.Seminars, &recordStudyPlan.CourseProject, &recordStudyPlan.IntermediateCertification, &recordStudyPlan.StudyPlanID)
-		if err != nil {
-			return
-		}
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectAllLoads() (loads []model.Load, err error) {
-	var tmp model.Load
-	rows, err := d.db.Query(context.Background(), "SELECT id, record_study_plan_id, time_on_subject, teacher_id, group_id FROM load")
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.RecordStudyPlanID, &tmp.TimeOnSubject, &tmp.TeacherID, &tmp.GroupID)
-		if err != nil {
-			return
-		}
-		loads = append(loads, tmp)
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectLoadByID(id int) (load model.Load, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, record_study_plan_id, time_on_subject, teacher_id, group_id FROM load WHERE id = $1", id)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&load.ID, &load.RecordStudyPlanID, &load.TimeOnSubject, &load.TeacherID, &load.GroupID)
 		if err != nil {
 			return
 		}

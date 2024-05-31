@@ -5,5 +5,4 @@ type Group struct {
 	SpecializationID int    `json:"specializationid"`
 	Name             string `json:"name"`
 	Course           int    `json:"course"`
-	FlowID           int    `json:"flowId"`
 }
