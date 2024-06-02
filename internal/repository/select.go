@@ -39,6 +39,22 @@ func (d *DatabaseRepo) SelectSubjectByID(id int) (subject model.Subject, err err
 	return
 }
 
+func (d *DatabaseRepo) SelectIDBySubject(subj string) (subject model.Subject, err error) {
+	rows, err := d.db.Query(context.Background(), "SELECT id, subject_name FROM subject WHERE subject_name = $1", subj)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&subject.ID, &subject.SubjectName)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
 func (d *DatabaseRepo) SelectAllTeachers() (teachers []model.Teacher, err error) {
 	var tmp model.Teacher
 	rows, err := d.db.Query(context.Background(), "SELECT id, name, surname, patronymic, category FROM teacher")
@@ -59,6 +75,22 @@ func (d *DatabaseRepo) SelectAllTeachers() (teachers []model.Teacher, err error)
 
 func (d *DatabaseRepo) SelectTeacherByID(id int) (teacher model.Teacher, err error) {
 	rows, err := d.db.Query(context.Background(), "SELECT id, name, surname, patronymic, category FROM teacher WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&teacher.ID, &teacher.Name, &teacher.Surname, &teacher.Patronymic, &teacher.Category)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectTeacherBySurname(surname string) (teacher model.Teacher, err error) {
+	rows, err := d.db.Query(context.Background(), "SELECT id, name, surname, patronymic, category FROM teacher WHERE surname = $1", surname)
 	if err != nil {
 		return
 	}

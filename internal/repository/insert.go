@@ -33,3 +33,51 @@ func (d *DatabaseRepo) InsertSpecialization(specialization *model.Specialization
 		specialization.ID, specialization.SpecializationName, specialization.QualificationName)
 	return
 }
+
+func (d *DatabaseRepo) InsertSheet(sheet *model.Sheet) (id int, err error) {
+	row, err := d.db.Query(context.Background(), "INSERT INTO sheet(group_id) VALUES($1)",
+		sheet.GroupID)
+	for row.Next() {
+		err = row.Scan(&id)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) InsertRecord(record *model.Record) (id int, err error) {
+	row, err := d.db.Query(context.Background(), "INSERT INTO record(subject_id, time_semester_own, time_semester_two, teacher_id) VALUES($1, $2, $3, $4)",
+		record.SubjectID, record.TimeSemesterOwn, record.TimeSemesterTwo, record.TeacherID)
+	for row.Next() {
+		err = row.Scan(&id)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) InsertTableFile(tableFile *model.TableFile) (id int, err error) {
+	row, err := d.db.Query(context.Background(), "INSERT INTO table_file(name, date) VALUES($1, $2)",
+		tableFile.Name, tableFile.Date)
+	for row.Next() {
+		err = row.Scan(&id)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) InsertSheetRecords(sheetRecords *model.SheetRecords) (err error) {
+	_, err = d.db.Exec(context.Background(), "INSERT INTO sheet_records(sheet_id, record_id) VALUES($1, $2)",
+		sheetRecords.SheetID, sheetRecords.RecordID)
+	return
+}
+
+func (d *DatabaseRepo) InsertTableFileSheets(tableFileSheet *model.TableFileSheet) (err error) {
+	_, err = d.db.Exec(context.Background(), "INSERT INTO table_file_sheets(sheet_id, table_file_id) VALUES($1, $2)",
+		tableFileSheet.SheetID, tableFileSheet.TableFileID)
+	return
+}

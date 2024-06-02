@@ -19,11 +19,20 @@ type Database interface {
 	SelectGroupByID(id int) (group model.Group, err error)
 	SelectSpecializationByID(id int) (specialization model.Specialization, err error)
 
+	SelectIDBySubject(subj string) (subject model.Subject, err error)
+
+	SelectTeacherBySurname(surname string) (teacher model.Teacher, err error)
+
 	InsertSubject(subject *model.Subject) (err error)
 	InsertTeacher(teacher *model.Teacher) (err error)
 	InsertTeacherSubject(teacherSubject *model.TeacherSubject) (err error)
 	InsertGroup(group *model.Group) (err error)
 	InsertSpecialization(specialization *model.Specialization) (err error)
+	InsertSheet(sheet *model.Sheet) (id int, err error)
+	InsertRecord(record *model.Record) (id int, err error)
+	InsertSheetRecords(sheetRecord *model.SheetRecords) (err error)
+	InsertTableFile(tableFile *model.TableFile) (id int, err error)
+	InsertTableFileSheets(tableFIleSheet *model.TableFileSheet) (err error)
 
 	UpdateSubject(id int, subject *model.Subject) (err error)
 	UpdateTeacher(id int, teacher model.Teacher) (err error)

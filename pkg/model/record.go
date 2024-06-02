@@ -1,6 +1,6 @@
 package model
 
-type TableOfSubjectsRecord struct {
+type Record struct {
 	ID              int    `json:"id"`
 	SubjectID       int    `json:"subjectid"`
 	TimeSemesterOwn string `json:"timesemesterown"`

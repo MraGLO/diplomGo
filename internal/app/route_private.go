@@ -19,6 +19,9 @@ func PrivateRoutes(router *fiber.App, handlers *http.Handlers) {
 	subject := router.Group("/subject")
 	teacher := router.Group("/teacher")
 	teacherSubject := router.Group("/teacherSubject")
+	file := router.Group("/file")
+
+	file.Post("/add", handlers.AddFile)
 
 	subject.Post("/add", handlers.AddSubject)
 	subject.Put("/:subjectID", handlers.UpdateSubject)

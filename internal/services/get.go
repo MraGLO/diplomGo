@@ -41,3 +41,10 @@ func (s *Services) GetAllSpecialization() ([]model.Specialization, error) {
 func (s *Services) GetSpecializationByID(id int) (model.Specialization, error) {
 	return s.Database.db.SelectSpecializationByID(id)
 }
+
+func (s *Services) GetIDBySubject(subj string) (model.Subject, error) {
+	return s.Database.db.SelectIDBySubject(subj)
+}
+func (s *Services) GetTeacherBySurname(surname string) (model.Teacher, error) {
+	return s.Database.db.SelectTeacherBySurname(surname)
+}
