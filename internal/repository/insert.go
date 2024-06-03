@@ -35,8 +35,14 @@ func (d *DatabaseRepo) InsertSpecialization(specialization *model.Specialization
 }
 
 func (d *DatabaseRepo) InsertSheet(sheet *model.Sheet) (id int, err error) {
-	row, err := d.db.Query(context.Background(), "INSERT INTO sheet(group_id) VALUES($1)",
+	row, err := d.db.Query(context.Background(), "INSERT INTO sheet(group_id) VALUES($1) RETURNING id",
 		sheet.GroupID)
+
+	if err != nil {
+		return
+	}
+	defer row.Close()
+
 	for row.Next() {
 		err = row.Scan(&id)
 		if err != nil {
@@ -47,8 +53,13 @@ func (d *DatabaseRepo) InsertSheet(sheet *model.Sheet) (id int, err error) {
 }
 
 func (d *DatabaseRepo) InsertRecord(record *model.Record) (id int, err error) {
-	row, err := d.db.Query(context.Background(), "INSERT INTO record(subject_id, time_semester_own, time_semester_two, teacher_id) VALUES($1, $2, $3, $4)",
+	row, err := d.db.Query(context.Background(), "INSERT INTO record(subject_id, time_semester_one, time_semester_two, teacher_id) VALUES($1, $2, $3, $4) RETURNING id",
 		record.SubjectID, record.TimeSemesterOwn, record.TimeSemesterTwo, record.TeacherID)
+	if err != nil {
+		return
+	}
+	defer row.Close()
+
 	for row.Next() {
 		err = row.Scan(&id)
 		if err != nil {
@@ -59,8 +70,14 @@ func (d *DatabaseRepo) InsertRecord(record *model.Record) (id int, err error) {
 }
 
 func (d *DatabaseRepo) InsertTableFile(tableFile *model.TableFile) (id int, err error) {
-	row, err := d.db.Query(context.Background(), "INSERT INTO table_file(name, date) VALUES($1, $2)",
+	row, err := d.db.Query(context.Background(), "INSERT INTO table_file(name, date) VALUES($1, $2) RETURNING id",
 		tableFile.Name, tableFile.Date)
+
+	if err != nil {
+		return
+	}
+	defer row.Close()
+
 	for row.Next() {
 		err = row.Scan(&id)
 		if err != nil {

@@ -39,15 +39,15 @@ func (d *DatabaseRepo) SelectSubjectByID(id int) (subject model.Subject, err err
 	return
 }
 
-func (d *DatabaseRepo) SelectIDBySubject(subj string) (subject model.Subject, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, subject_name FROM subject WHERE subject_name = $1", subj)
+func (d *DatabaseRepo) SelectIDBySubject(subj string) (id int, err error) {
+	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."subject" WHERE subject_name = $1`, subj)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&subject.ID, &subject.SubjectName)
+		err = rows.Scan(&id)
 		if err != nil {
 			return
 		}
@@ -89,15 +89,15 @@ func (d *DatabaseRepo) SelectTeacherByID(id int) (teacher model.Teacher, err err
 	return
 }
 
-func (d *DatabaseRepo) SelectTeacherBySurname(surname string) (teacher model.Teacher, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, name, surname, patronymic, category FROM teacher WHERE surname = $1", surname)
+func (d *DatabaseRepo) SelectIDByTeacherSurname(surname string) (id int, err error) {
+	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."teacher" WHERE surname = $1`, surname)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&teacher.ID, &teacher.Name, &teacher.Surname, &teacher.Patronymic, &teacher.Category)
+		err = rows.Scan(&id)
 		if err != nil {
 			return
 		}
@@ -200,6 +200,22 @@ func (d *DatabaseRepo) SelectSpecializationByID(id int) (specialization model.Sp
 
 	for rows.Next() {
 		err = rows.Scan(&specialization.ID, &specialization.SpecializationName, &specialization.QualificationName)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectIDByGroupName(groupName string) (id int, err error) {
+	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."group" WHERE name = $1`, groupName)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&id)
 		if err != nil {
 			return
 		}
