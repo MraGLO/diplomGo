@@ -52,3 +52,27 @@ func (s *Services) GetIDByTeacherSurname(surname string) (int, error) {
 func (s *Services) GetIDByGroupName(groupName string) (int, error) {
 	return s.Database.db.SelectIDByGroupName(groupName)
 }
+
+func (s *Services) GetAllTableFiles() ([]model.TableFile, error) {
+	return s.Database.db.SelectAllTableFiles()
+}
+
+func (s *Services) GetTableFilesByID(id int) (model.TableFile, error) {
+	return s.Database.db.SelectTableFilesByID(id)
+}
+
+func (s *Services) GetAllTableFileSheetsByTableFileID(tableFileID int) ([]model.TableFileSheet, error) {
+	return s.Database.db.SelectAllTableFileSheetsByTableFileID(tableFileID)
+}
+
+func (s *Services) GetSheetByID(id int) (sheet model.Sheet, err error) {
+	return s.Database.db.SelectSheetByID(id)
+}
+
+func (s *Services) GetAllSheetRecordsBySheetID(sheetID int) ([]model.SheetRecords, error) {
+	return s.Database.db.SelectAllSheetRecordsBySheetID(sheetID)
+}
+
+func (s *Services) GetRecordByID(id int) (model.Record, error) {
+	return s.Database.db.SelectRecordByID(id)
+}

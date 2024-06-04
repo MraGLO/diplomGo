@@ -18,11 +18,16 @@ type Database interface {
 	SelectTeacherSubjectByID(id int) (teacherSubject model.TeacherSubject, err error)
 	SelectGroupByID(id int) (group model.Group, err error)
 	SelectSpecializationByID(id int) (specialization model.Specialization, err error)
+	SelectSheetByID(id int) (sheet model.Sheet, err error)
+	SelectRecordByID(id int) (record model.Record, err error)
+	SelectTableFilesByID(id int) (tableFile model.TableFile, err error)
+	SelectAllTableFiles() (tableFile []model.TableFile, err error)
+
+	SelectAllTableFileSheetsByTableFileID(tableFileID int) (TableFileSheet []model.TableFileSheet, err error)
+	SelectAllSheetRecordsBySheetID(sheetID int) (sheetRecords []model.SheetRecords, err error)
 
 	SelectIDBySubject(subj string) (id int, err error)
-
 	SelectIDByTeacherSurname(surname string) (id int, err error)
-
 	SelectIDByGroupName(groupName string) (id int, err error)
 
 	InsertSubject(subject *model.Subject) (err error)

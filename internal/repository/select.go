@@ -222,3 +222,105 @@ func (d *DatabaseRepo) SelectIDByGroupName(groupName string) (id int, err error)
 	}
 	return
 }
+
+func (d *DatabaseRepo) SelectAllTableFiles() (tableFile []model.TableFile, err error) {
+	var tmp model.TableFile
+	rows, err := d.db.Query(context.Background(), "SELECT id, name, date FROM table_file")
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.Name, &tmp.Date)
+		if err != nil {
+			return
+		}
+		tableFile = append(tableFile, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectTableFilesByID(id int) (tableFile model.TableFile, err error) {
+	rows, err := d.db.Query(context.Background(), "SELECT id, name, date FROM table_file WHERE id = 1$", id)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tableFile.ID, &tableFile.Name, &tableFile.Date)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectAllTableFileSheetsByTableFileID(tableFileID int) (TableFileSheet []model.TableFileSheet, err error) {
+	var tmp model.TableFileSheet
+	rows, err := d.db.Query(context.Background(), "SELECT id, sheet_id, table_file_id FROM table_file_sheets WHERE table_file_id = $1", tableFileID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.SheetID, &tmp.TableFileID)
+		if err != nil {
+			return
+		}
+		TableFileSheet = append(TableFileSheet, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectSheetByID(id int) (sheet model.Sheet, err error) {
+	rows, err := d.db.Query(context.Background(), "SELECT id, group_id FROM sheet WHERE id = 1$", id)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&sheet.ID, &sheet.GroupID)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectAllSheetRecordsBySheetID(sheetID int) (sheetRecords []model.SheetRecords, err error) {
+	var tmp model.SheetRecords
+	rows, err := d.db.Query(context.Background(), "SELECT id, sheet_id, record_id FROM sheet_records WHERE table_file_id = $1", sheetID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.SheetID, &tmp.RecordID)
+		if err != nil {
+			return
+		}
+		sheetRecords = append(sheetRecords, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectRecordByID(id int) (record model.Record, err error) {
+	rows, err := d.db.Query(context.Background(), "SELECT id, subject_id, time_semester_one, time_semester_two, teacher_id FROM record WHERE id = 1$", id)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&record.ID, &record.SubjectID, &record.TimeSemesterOwn, &record.TimeSemesterTwo, &record.TeacherID)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
