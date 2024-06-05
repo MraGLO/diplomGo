@@ -242,7 +242,7 @@ func (d *DatabaseRepo) SelectAllTableFiles() (tableFile []model.TableFile, err e
 }
 
 func (d *DatabaseRepo) SelectTableFilesByID(id int) (tableFile model.TableFile, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, name, date FROM table_file WHERE id = 1$", id)
+	rows, err := d.db.Query(context.Background(), "SELECT id, name, date FROM table_file WHERE id = $1", id)
 	if err != nil {
 		return
 	}
@@ -276,7 +276,7 @@ func (d *DatabaseRepo) SelectAllTableFileSheetsByTableFileID(tableFileID int) (T
 }
 
 func (d *DatabaseRepo) SelectSheetByID(id int) (sheet model.Sheet, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, group_id FROM sheet WHERE id = 1$", id)
+	rows, err := d.db.Query(context.Background(), "SELECT id, group_id FROM sheet WHERE id = $1", id)
 	if err != nil {
 		return
 	}
@@ -293,7 +293,7 @@ func (d *DatabaseRepo) SelectSheetByID(id int) (sheet model.Sheet, err error) {
 
 func (d *DatabaseRepo) SelectAllSheetRecordsBySheetID(sheetID int) (sheetRecords []model.SheetRecords, err error) {
 	var tmp model.SheetRecords
-	rows, err := d.db.Query(context.Background(), "SELECT id, sheet_id, record_id FROM sheet_records WHERE table_file_id = $1", sheetID)
+	rows, err := d.db.Query(context.Background(), "SELECT id, sheet_id, record_id FROM sheet_records WHERE sheet_id = $1", sheetID)
 	if err != nil {
 		return
 	}
@@ -310,7 +310,7 @@ func (d *DatabaseRepo) SelectAllSheetRecordsBySheetID(sheetID int) (sheetRecords
 }
 
 func (d *DatabaseRepo) SelectRecordByID(id int) (record model.Record, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, subject_id, time_semester_one, time_semester_two, teacher_id FROM record WHERE id = 1$", id)
+	rows, err := d.db.Query(context.Background(), "SELECT id, subject_id, time_semester_one, time_semester_two, teacher_id FROM record WHERE id = $1", id)
 	if err != nil {
 		return
 	}
