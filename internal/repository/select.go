@@ -158,7 +158,7 @@ func (d *DatabaseRepo) SelectAllGroups() (groups []model.Group, err error) {
 }
 
 func (d *DatabaseRepo) SelectGroupByID(id int) (group model.Group, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, name FROM group WHERE id = $1", id)
+	rows, err := d.db.Query(context.Background(), `SELECT id, name FROM public."group" WHERE id = $1`, id)
 	if err != nil {
 		return
 	}
@@ -243,7 +243,7 @@ func (d *DatabaseRepo) SelectAllTableFileGroupsByTableFileID(tableFileID int) (T
 
 func (d *DatabaseRepo) SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error) {
 	var tmp model.GroupRecords
-	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, record_id FROM group_records WHERE sheet_id = $1", groupID)
+	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, record_id FROM group_records WHERE group_id = $1", groupID)
 	if err != nil {
 		return
 	}
