@@ -2,7 +2,6 @@ package model
 
 type PricingRecord struct {
 	ID                  int    `json:"id"`
-	TeacherID           int    `json:"teacherid"`
 	GroupID             int    `json:"groupid"`
 	FirstHalfYear       int    `json:"firsthalfyear"`
 	SecondHalfYear      int    `json:"secondhalfyear"`
