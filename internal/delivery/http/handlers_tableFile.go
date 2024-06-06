@@ -13,10 +13,9 @@ import (
 func (h *Handlers) AddFile(c *fiber.Ctx) error {
 
 	var objTableFile model.TableFile
-	var objSheet model.Sheet
 	var objRecord model.Record
-	var objTableFileSheet model.TableFileSheet
-	var objSheetRecords model.SheetRecords
+	var objTableFileGroup model.TableFileGroup
+	var objGroupRecords model.GroupRecords
 
 	file, err := c.FormFile("excel")
 	if err != nil {
@@ -52,21 +51,16 @@ func (h *Handlers) AddFile(c *fiber.Ctx) error {
 	var sheets = f.GetSheetList()
 	for _, sheet := range sheets {
 
-		objSheet.GroupID, err = h.services.GetIDByGroupName(sheet)
-		if err != nil {
-			log.Println(err)
-			return err
-		}
-		idSheet, err := h.services.AddSheet(objSheet)
+		groupID, err := h.services.GetIDByGroupName(sheet)
 		if err != nil {
 			log.Println(err)
 			return err
 		}
 
-		objTableFileSheet.TableFileID = idTableFile
-		objTableFileSheet.SheetID = idSheet
+		objTableFileGroup.TableFileID = idTableFile
+		objTableFileGroup.GroupID = groupID
 
-		err = h.services.AddTableFileSheets(objTableFileSheet)
+		err = h.services.AddTableFileGroups(objTableFileGroup)
 		if err != nil {
 			log.Println(err)
 			return err
@@ -92,15 +86,15 @@ func (h *Handlers) AddFile(c *fiber.Ctx) error {
 				objRecord.TimeSemesterOwn = row[2]
 				objRecord.TimeSemesterTwo = row[3]
 
-				idRecord, err := h.services.AddRecord(objRecord)
+				recordID, err := h.services.AddRecord(objRecord)
 				if err != nil {
 					log.Println(err)
 					return err
 				}
 
-				objSheetRecords.SheetID = idSheet
-				objSheetRecords.RecordID = idRecord
-				err = h.services.AddSheetRecords(objSheetRecords)
+				objGroupRecords.GroupID = groupID
+				objGroupRecords.RecordID = recordID
+				err = h.services.AddGroupRecords(objGroupRecords)
 				if err != nil {
 					log.Println(err)
 					return err

@@ -13,8 +13,6 @@ func PrivateRoutes(router *fiber.App, handlers *http.Handlers) {
 	router.Get("teacher/:teacherID", handlers.GetTeacherById)
 	router.Get("teacherSubject/all", handlers.GetAllTeacherSubject)
 	router.Get("teacherSubject/:teacherSubjectID", handlers.GetTeacherSubjectById)
-	router.Get("specialization/all", handlers.GetAllSpecializations)
-	router.Get("specialization/:specializationID", handlers.GetSpecializationById)
 	router.Get("dataFromTableFile/:tableFileID", handlers.GetDataFromTableFileById)
 
 	subject := router.Group("/subject")

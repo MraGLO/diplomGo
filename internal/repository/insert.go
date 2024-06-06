@@ -23,32 +23,8 @@ func (d *DatabaseRepo) InsertTeacherSubject(teacherSubject *model.TeacherSubject
 }
 
 func (d *DatabaseRepo) InsertGroup(group *model.Group) (err error) {
-	_, err = d.db.Exec(context.Background(), "INSERT INTO group(id, specialization_id, name, course) VALUES($1, $2, $3, $4)",
-		group.ID, group.SpecializationID, group.Name, group.Course)
-	return
-}
-
-func (d *DatabaseRepo) InsertSpecialization(specialization *model.Specialization) (err error) {
-	_, err = d.db.Exec(context.Background(), "INSERT INTO specialization(id, specialization_name, qualification_name) VALUES($1, $2, $3)",
-		specialization.ID, specialization.SpecializationName, specialization.QualificationName)
-	return
-}
-
-func (d *DatabaseRepo) InsertSheet(sheet *model.Sheet) (id int, err error) {
-	row, err := d.db.Query(context.Background(), "INSERT INTO sheet(group_id) VALUES($1) RETURNING id",
-		sheet.GroupID)
-
-	if err != nil {
-		return
-	}
-	defer row.Close()
-
-	for row.Next() {
-		err = row.Scan(&id)
-		if err != nil {
-			return
-		}
-	}
+	_, err = d.db.Exec(context.Background(), "INSERT INTO group(id, name) VALUES($1, $2)",
+		group.ID, group.Name)
 	return
 }
 
@@ -87,14 +63,14 @@ func (d *DatabaseRepo) InsertTableFile(tableFile *model.TableFile) (id int, err 
 	return
 }
 
-func (d *DatabaseRepo) InsertSheetRecords(sheetRecords *model.SheetRecords) (err error) {
-	_, err = d.db.Exec(context.Background(), "INSERT INTO sheet_records(sheet_id, record_id) VALUES($1, $2)",
-		sheetRecords.SheetID, sheetRecords.RecordID)
+func (d *DatabaseRepo) InsertGroupRecords(groupRecords *model.GroupRecords) (err error) {
+	_, err = d.db.Exec(context.Background(), "INSERT INTO group_records(group_id, record_id) VALUES($1, $2)",
+		groupRecords.GroupID, groupRecords.RecordID)
 	return
 }
 
-func (d *DatabaseRepo) InsertTableFileSheets(tableFileSheet *model.TableFileSheet) (err error) {
-	_, err = d.db.Exec(context.Background(), "INSERT INTO table_file_sheets(sheet_id, table_file_id) VALUES($1, $2)",
-		tableFileSheet.SheetID, tableFileSheet.TableFileID)
+func (d *DatabaseRepo) InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error) {
+	_, err = d.db.Exec(context.Background(), "INSERT INTO table_file_groups(group_id, table_file_id) VALUES($1, $2)",
+		tableFileGroup.GroupID, tableFileGroup.TableFileID)
 	return
 }

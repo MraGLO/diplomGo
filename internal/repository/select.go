@@ -141,14 +141,14 @@ func (d *DatabaseRepo) SelectTeacherSubjectByID(id int) (teacherSubject model.Te
 
 func (d *DatabaseRepo) SelectAllGroups() (groups []model.Group, err error) {
 	var tmp model.Group
-	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_id, name, course FROM group")
+	rows, err := d.db.Query(context.Background(), "SELECT id, name FROM group")
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.SpecializationID, &tmp.Name, &tmp.Course)
+		err = rows.Scan(&tmp.ID, &tmp.Name)
 		if err != nil {
 			return
 		}
@@ -158,48 +158,14 @@ func (d *DatabaseRepo) SelectAllGroups() (groups []model.Group, err error) {
 }
 
 func (d *DatabaseRepo) SelectGroupByID(id int) (group model.Group, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_id, name, course  FROM group WHERE id = $1", id)
+	rows, err := d.db.Query(context.Background(), "SELECT id, name FROM group WHERE id = $1", id)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&group.ID, &group.SpecializationID, &group.Name, &group.Course)
-		if err != nil {
-			return
-		}
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectAllSpecializations() (specializations []model.Specialization, err error) {
-	var tmp model.Specialization
-	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_name, qualification_name FROM specialization")
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.SpecializationName, &tmp.QualificationName)
-		if err != nil {
-			return
-		}
-		specializations = append(specializations, tmp)
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectSpecializationByID(id int) (specialization model.Specialization, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, specialization_name, qualification_name FROM specialization WHERE id = $1", id)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&specialization.ID, &specialization.SpecializationName, &specialization.QualificationName)
+		err = rows.Scan(&group.ID, &group.Name)
 		if err != nil {
 			return
 		}
@@ -257,54 +223,38 @@ func (d *DatabaseRepo) SelectTableFilesByID(id int) (tableFile model.TableFile, 
 	return
 }
 
-func (d *DatabaseRepo) SelectAllTableFileSheetsByTableFileID(tableFileID int) (TableFileSheet []model.TableFileSheet, err error) {
-	var tmp model.TableFileSheet
-	rows, err := d.db.Query(context.Background(), "SELECT id, sheet_id, table_file_id FROM table_file_sheets WHERE table_file_id = $1", tableFileID)
+func (d *DatabaseRepo) SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error) {
+	var tmp model.TableFileGroup
+	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, table_file_id FROM table_file_groups WHERE table_file_id = $1", tableFileID)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.SheetID, &tmp.TableFileID)
+		err = rows.Scan(&tmp.ID, &tmp.GroupID, &tmp.TableFileID)
 		if err != nil {
 			return
 		}
-		TableFileSheet = append(TableFileSheet, tmp)
+		TableFileGroup = append(TableFileGroup, tmp)
 	}
 	return
 }
 
-func (d *DatabaseRepo) SelectSheetByID(id int) (sheet model.Sheet, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, group_id FROM sheet WHERE id = $1", id)
+func (d *DatabaseRepo) SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error) {
+	var tmp model.GroupRecords
+	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, record_id FROM group_records WHERE sheet_id = $1", groupID)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&sheet.ID, &sheet.GroupID)
+		err = rows.Scan(&tmp.ID, &tmp.GroupID, &tmp.RecordID)
 		if err != nil {
 			return
 		}
-	}
-	return
-}
-
-func (d *DatabaseRepo) SelectAllSheetRecordsBySheetID(sheetID int) (sheetRecords []model.SheetRecords, err error) {
-	var tmp model.SheetRecords
-	rows, err := d.db.Query(context.Background(), "SELECT id, sheet_id, record_id FROM sheet_records WHERE sheet_id = $1", sheetID)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.SheetID, &tmp.RecordID)
-		if err != nil {
-			return
-		}
-		sheetRecords = append(sheetRecords, tmp)
+		groupRecords = append(groupRecords, tmp)
 	}
 	return
 }

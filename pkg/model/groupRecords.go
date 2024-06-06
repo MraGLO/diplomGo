@@ -1,7 +1,7 @@
 package model
 
-type SheetRecords struct {
+type GroupRecords struct {
 	ID       int `json:"id"`
-	SheetID  int `json:"sheetid"`
+	GroupID  int `json:"groupid"`
 	RecordID int `json:"recordid"`
 }

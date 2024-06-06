@@ -1,7 +1,7 @@
 package model
 
-type TableFileSheet struct {
+type TableFileGroup struct {
 	ID          int `json:"id"`
-	SheetID     int `json:"sheetid"`
+	GroupID     int `json:"groupid"`
 	TableFileID int `json:"tablefileid"`
 }
