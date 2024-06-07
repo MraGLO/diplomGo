@@ -32,3 +32,7 @@ func (s *Services) AddGroupRecords(groupRecords model.GroupRecords) error {
 func (s *Services) AddTableFileGroups(tableFileGroup model.TableFileGroup) error {
 	return s.Database.db.InsertTableFileGroups(&tableFileGroup)
 }
+
+func (s *Services) AddPricingTable(pricingTable model.PricingTable) (int, error) {
+	return s.Database.db.InsertPricingTable(&pricingTable)
+}

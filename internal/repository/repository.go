@@ -27,6 +27,9 @@ type Database interface {
 	SelectIDByTeacherSurname(surname string) (id int, err error)
 	SelectIDByGroupName(groupName string) (id int, err error)
 
+	SelectAllTeachersFromPriceView(tableFileID int) (teachers []model.Teacher, err error)
+	SelectAllRecordForPricingFromPriceView(tableFileID int, teacherID int) (recordForPricing []model.RecordForPricing, err error)
+
 	InsertSubject(subject *model.Subject) (err error)
 	InsertTeacher(teacher *model.Teacher) (err error)
 	InsertTeacherSubject(teacherSubject *model.TeacherSubject) (err error)
@@ -35,6 +38,7 @@ type Database interface {
 	InsertGroupRecords(groupRecords *model.GroupRecords) (err error)
 	InsertTableFile(tableFile *model.TableFile) (id int, err error)
 	InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error)
+	InsertPricingTable(pricingTable *model.PricingTable) (id int, err error)
 
 	UpdateSubject(id int, subject *model.Subject) (err error)
 	UpdateTeacher(id int, teacher model.Teacher) (err error)

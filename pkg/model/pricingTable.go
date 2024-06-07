@@ -2,6 +2,6 @@ package model
 
 type PricingTable struct {
 	ID   int         `json:"id"`
-	Name int         `json:"name"`
+	Name string      `json:"name"`
 	Date interface{} `json:"date"`
 }

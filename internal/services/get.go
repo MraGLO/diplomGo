@@ -64,3 +64,9 @@ func (s *Services) GetAllGroupRecordsByGroupID(groupID int) ([]model.GroupRecord
 func (s *Services) GetRecordByID(id int) (model.Record, error) {
 	return s.Database.db.SelectRecordByID(id)
 }
+func (s *Services) GetAllTeachersFromPriceView(tableFileID int) ([]model.Teacher, error) {
+	return s.Database.db.SelectAllTeachersFromPriceView(tableFileID)
+}
+func (s *Services) GetAllRecordForPricingFromPriceView(tableFileID int, teacherID int) ([]model.RecordForPricing, error) {
+	return s.Database.db.SelectAllRecordForPricingFromPriceView(tableFileID, teacherID)
+}

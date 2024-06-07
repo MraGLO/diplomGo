@@ -74,3 +74,21 @@ func (d *DatabaseRepo) InsertTableFileGroups(tableFileGroup *model.TableFileGrou
 		tableFileGroup.GroupID, tableFileGroup.TableFileID)
 	return
 }
+
+func (d *DatabaseRepo) InsertPricingTable(pricingTable *model.PricingTable) (id int, err error) {
+	row, err := d.db.Query(context.Background(), "INSERT INTO pricing_table(name, date) VALUES($1, $2) RETURNING id",
+		pricingTable.Name, pricingTable.Date)
+
+	if err != nil {
+		return
+	}
+	defer row.Close()
+
+	for row.Next() {
+		err = row.Scan(&id)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
