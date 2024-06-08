@@ -223,23 +223,23 @@ func (d *DatabaseRepo) SelectTableFilesByID(id int) (tableFile model.TableFile, 
 	return
 }
 
-func (d *DatabaseRepo) SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error) {
-	var tmp model.TableFileGroup
-	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, table_file_id FROM table_file_groups WHERE table_file_id = $1", tableFileID)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
+// func (d *DatabaseRepo) SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error) {
+// 	var tmp model.TableFileGroup
+// 	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, table_file_id FROM table_file_groups WHERE table_file_id = $1", tableFileID)
+// 	if err != nil {
+// 		return
+// 	}
+// 	defer rows.Close()
 
-	for rows.Next() {
-		err = rows.Scan(&tmp.ID, &tmp.GroupID, &tmp.TableFileID)
-		if err != nil {
-			return
-		}
-		TableFileGroup = append(TableFileGroup, tmp)
-	}
-	return
-}
+// 	for rows.Next() {
+// 		err = rows.Scan(&tmp.ID, &tmp.GroupID, &tmp.TableFileID)
+// 		if err != nil {
+// 			return
+// 		}
+// 		TableFileGroup = append(TableFileGroup, tmp)
+// 	}
+// 	return
+// }
 
 func (d *DatabaseRepo) SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error) {
 	var tmp model.GroupRecords

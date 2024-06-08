@@ -14,7 +14,6 @@ func (h *Handlers) AddFile(c *fiber.Ctx) error {
 
 	var objTableFile model.TableFile
 	var objRecord model.Record
-	var objTableFileGroup model.TableFileGroup
 	var objGroupRecords model.GroupRecords
 
 	file, err := c.FormFile("excel")
@@ -57,15 +56,6 @@ func (h *Handlers) AddFile(c *fiber.Ctx) error {
 			return err
 		}
 
-		objTableFileGroup.TableFileID = idTableFile
-		objTableFileGroup.GroupID = groupID
-
-		err = h.services.AddTableFileGroups(objTableFileGroup)
-		if err != nil {
-			log.Println(err)
-			return err
-		}
-
 		rows, err := f.GetRows(sheet)
 		if err != nil {
 			log.Println(err)
@@ -85,6 +75,7 @@ func (h *Handlers) AddFile(c *fiber.Ctx) error {
 				}
 				objRecord.TimeSemesterOwn = row[2]
 				objRecord.TimeSemesterTwo = row[3]
+				objRecord.TableFileID = idTableFile
 
 				recordID, err := h.services.AddRecord(objRecord)
 				if err != nil {

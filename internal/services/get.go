@@ -53,9 +53,9 @@ func (s *Services) GetTableFilesByID(id int) (model.TableFile, error) {
 	return s.Database.db.SelectTableFilesByID(id)
 }
 
-func (s *Services) GetAllTableFileGroupsByTableFileID(tableFileID int) ([]model.TableFileGroup, error) {
-	return s.Database.db.SelectAllTableFileGroupsByTableFileID(tableFileID)
-}
+// func (s *Services) GetAllTableFileGroupsByTableFileID(tableFileID int) ([]model.TableFileGroup, error) {
+// 	return s.Database.db.SelectAllTableFileGroupsByTableFileID(tableFileID)
+// }
 
 func (s *Services) GetAllGroupRecordsByGroupID(groupID int) ([]model.GroupRecords, error) {
 	return s.Database.db.SelectAllGroupRecordsByGroupID(groupID)

@@ -29,8 +29,8 @@ func (d *DatabaseRepo) InsertGroup(group *model.Group) (err error) {
 }
 
 func (d *DatabaseRepo) InsertRecord(record *model.Record) (id int, err error) {
-	row, err := d.db.Query(context.Background(), "INSERT INTO record(subject_id, time_semester_one, time_semester_two, teacher_id) VALUES($1, $2, $3, $4) RETURNING id",
-		record.SubjectID, record.TimeSemesterOwn, record.TimeSemesterTwo, record.TeacherID)
+	row, err := d.db.Query(context.Background(), "INSERT INTO record(subject_id, time_semester_one, time_semester_two, teacher_id, table_file_id) VALUES($1, $2, $3, $4, $5) RETURNING id",
+		record.SubjectID, record.TimeSemesterOwn, record.TimeSemesterTwo, record.TeacherID, record.TableFileID)
 	if err != nil {
 		return
 	}
@@ -69,11 +69,11 @@ func (d *DatabaseRepo) InsertGroupRecords(groupRecords *model.GroupRecords) (err
 	return
 }
 
-func (d *DatabaseRepo) InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error) {
-	_, err = d.db.Exec(context.Background(), "INSERT INTO table_file_groups(group_id, table_file_id) VALUES($1, $2)",
-		tableFileGroup.GroupID, tableFileGroup.TableFileID)
-	return
-}
+// func (d *DatabaseRepo) InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error) {
+// 	_, err = d.db.Exec(context.Background(), "INSERT INTO table_file_groups(group_id, table_file_id) VALUES($1, $2)",
+// 		tableFileGroup.GroupID, tableFileGroup.TableFileID)
+// 	return
+// }
 
 func (d *DatabaseRepo) InsertPricingTable(pricingTable *model.PricingTable) (id int, err error) {
 	row, err := d.db.Query(context.Background(), "INSERT INTO pricing_table(name, date) VALUES($1, $2) RETURNING id",

@@ -20,7 +20,7 @@ type Database interface {
 	SelectTableFilesByID(id int) (tableFile model.TableFile, err error)
 	SelectAllTableFiles() (tableFile []model.TableFile, err error)
 
-	SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error)
+	// SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error)
 	SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error)
 
 	SelectIDBySubject(subj string) (id int, err error)
@@ -37,7 +37,7 @@ type Database interface {
 	InsertRecord(record *model.Record) (id int, err error)
 	InsertGroupRecords(groupRecords *model.GroupRecords) (err error)
 	InsertTableFile(tableFile *model.TableFile) (id int, err error)
-	InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error)
+	// InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error)
 	InsertPricingTable(pricingTable *model.PricingTable) (id int, err error)
 
 	UpdateSubject(id int, subject *model.Subject) (err error)

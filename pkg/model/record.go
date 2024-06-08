@@ -6,4 +6,5 @@ type Record struct {
 	TimeSemesterOwn string `json:"timesemesterown"`
 	TimeSemesterTwo string `json:"timesemestertwo"`
 	TeacherID       int    `json:"teacherid"`
+	TableFileID     int    `json:"tablefileid"`
 }
