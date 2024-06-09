@@ -1,31 +1,28 @@
 import { sendData } from './server.js';
 
-// отправка на сервер
-const publicate = (url) => {
-    const publicationForm = document.querySelector('.publication-form');
+window.onload = function() {
+    document.getElementById('btnAdd').addEventListener('click', function(event) {
+      event.preventDefault();
+      // Функционал обработки клика
 
-    publicationForm.addEventListener('submit', e => {
-        e.preventDefault();
+      const publicationForm = document.querySelector('.container');
 
-       // Собираем данные из формы в объект
-       const formDataObj = {};
+      // Собираем данные из формы в объект
+      const formDataObj = {};
 
-       // Сбор данных из формы
-       const formData = new FormData(publicationForm);
-       for (let [key, value] of formData.entries()) {
-           formDataObj[key] = value;
-       }
+      // Сбор данных из формы
+      const formData = new FormData(publicationForm);
+      for (let [key, value] of formData.entries()) {
+          formDataObj[key] = value;
+      }
 
-       // Отправляем данные на сервер
-       sendData(url, formDataObj)
-       .then(() => {
-           publicationForm.reset();
-       })
-       .catch((err) => {
-           console.log(err);
-       });
-    });
+      // Отправляем данные на сервер
+      sendData("/subject/add", formDataObj)
+      .then(() => {
+          publicationForm.reset();
+      })
+      .catch((err) => {
+          console.log(err);
+      });
+   });
 }
-
-publicate('/subject/add');
-
