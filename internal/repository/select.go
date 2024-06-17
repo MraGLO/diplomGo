@@ -7,7 +7,7 @@ import (
 
 func (d *DatabaseRepo) SelectAllSubject() (subjects []model.Subject, err error) {
 	var tmp model.Subject
-	rows, err := d.db.Query(context.Background(), "SELECT id, subject_name FROM subject")
+	rows, err := d.db.Query(context.Background(), "SELECT id, name FROM subject")
 	if err != nil {
 		return
 	}
@@ -24,7 +24,7 @@ func (d *DatabaseRepo) SelectAllSubject() (subjects []model.Subject, err error) 
 }
 
 func (d *DatabaseRepo) SelectSubjectByID(id int) (subject model.Subject, err error) {
-	rows, err := d.db.Query(context.Background(), "SELECT id, subject_name FROM subject WHERE id = $1", id)
+	rows, err := d.db.Query(context.Background(), "SELECT id, name FROM subject WHERE id = $1", id)
 	if err != nil {
 		return
 	}
@@ -40,7 +40,7 @@ func (d *DatabaseRepo) SelectSubjectByID(id int) (subject model.Subject, err err
 }
 
 func (d *DatabaseRepo) SelectIDBySubject(subj string) (id int, err error) {
-	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."subject" WHERE subject_name = $1`, subj)
+	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."subject" WHERE name = $1`, subj)
 	if err != nil {
 		return
 	}
@@ -277,7 +277,7 @@ func (d *DatabaseRepo) SelectRecordByID(id int) (record model.Record, err error)
 
 func (d *DatabaseRepo) SelectAllTeachersFromPriceView(tableFileID int) (teachers []model.Teacher, err error) {
 	var tmp model.Teacher
-	rows, err := d.db.Query(context.Background(), "SELECT distinct teacher_id, teacher_name, teacher_surname, teacher_patronymic, teacher_category FROM public.price_view WHERE table_file_id = $1", tableFileID)
+	rows, err := d.db.Query(context.Background(), "SELECT distinct teacher_id, teacher_name, teacher_surname, teacher_patronymic, teacher_category FROM public.table_file_view WHERE table_file_id = $1", tableFileID)
 	if err != nil {
 		return
 	}
@@ -295,7 +295,7 @@ func (d *DatabaseRepo) SelectAllTeachersFromPriceView(tableFileID int) (teachers
 
 func (d *DatabaseRepo) SelectAllRecordForPricingFromPriceView(tableFileID int, teacherID int) (recordForPricing []model.RecordForPricing, err error) {
 	var tmp model.RecordForPricing
-	rows, err := d.db.Query(context.Background(), "SELECT group_name, subject_name, time_semester_one, time_semester_two FROM public.price_view WHERE table_file_id = $1 AND teacher_id = $2", tableFileID, teacherID)
+	rows, err := d.db.Query(context.Background(), "SELECT group_name, subject_name, time_semester_one, time_semester_two FROM public.table_file_view WHERE table_file_id = $1 AND teacher_id = $2", tableFileID, teacherID)
 	if err != nil {
 		return
 	}

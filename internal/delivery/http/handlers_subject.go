@@ -69,7 +69,17 @@ func (h *Handlers) AddSubject(c *fiber.Ctx) error {
 		c.Status(400)
 		return c.JSON(model.Error{Data: str})
 	}
-
+	id, err := h.services.GetIDBySubject(subject.SubjectName)
+	if err != nil {
+		log.Println(err)
+		c.Status(500)
+		return c.JSON(model.Error{Data: "Невозможно обратиться к серверу"})
+	}
+	if id != 0 {
+		log.Println("Предмет уже существует")
+		c.Status(409)
+		return c.JSON(model.Error{Data: "Предмет уже существует"})
+	}
 	err = h.services.AddSubject(subject)
 	if err != nil {
 		log.Println(err)

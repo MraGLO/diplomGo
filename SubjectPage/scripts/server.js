@@ -20,22 +20,24 @@ export const sendData = async (url, data) => {
         });
 
         if (!response.ok) {
-            document.querySelector('.message__container').innerHTML += 
+            document.querySelector('.alert-container').innerHTML += 
             `
-            <div class="message__box message__box-error">
-                <strong class="message__header">Error:</strong>
-                <div class="message__text">${response.status}:${response.statusText}</div>
-            </div>
+            <div class="alert alert-danger alert-dismissible fade show" style="display:inline-block;" role="alert">
+                <strong>Ошибка!</strong>
+                <p>${response.status}:${response.statusText}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+             </div>
             `
             throw new Error(`Ошибка по адресу ${url}, статус ошибки ${response.status}: ${response.statusText}`);
 
         }
         else{
-            document.querySelector('.message__container').innerHTML += 
+            document.querySelector('.alert-container').innerHTML += 
             `
-            <div class="message__box message__box-success">
-                <strong class="message__header">Success</strong>
-                <div class="message__text">${response.status}:${response.statusText}</div>
+            <div  class="alert alert-success alert-dismissible fade show" style="display:inline-block;" role="alert">
+                <strong>Успешно!</strong> 
+                <p>${response.status}:${response.statusText}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             `
         }

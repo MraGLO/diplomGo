@@ -6,7 +6,7 @@ import (
 )
 
 func (d *DatabaseRepo) InsertSubject(subject *model.Subject) (err error) {
-	_, err = d.db.Exec(context.Background(), "INSERT INTO subject(subject_name) VALUES($1)", subject.SubjectName)
+	_, err = d.db.Exec(context.Background(), "INSERT INTO subject(name) VALUES($1)", subject.SubjectName)
 	return
 }
 
