@@ -1,7 +1,7 @@
 package model
 
 type GroupRecords struct {
-	ID       int `json:"id"`
-	GroupID  int `json:"groupid"`
-	RecordID int `json:"recordid"`
+	ID       int `json:"ID"`
+	GroupID  int `json:"groupID"`
+	RecordID int `json:"recordID"`
 }

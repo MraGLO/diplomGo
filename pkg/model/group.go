@@ -1,6 +1,6 @@
 package model
 
 type Group struct {
-	ID   int    `json:"id"`
+	ID   int    `json:"ID"`
 	Name string `json:"name"`
 }

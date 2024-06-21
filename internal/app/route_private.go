@@ -24,15 +24,15 @@ func PrivateRoutes(router *fiber.App, handlers *http.Handlers) {
 	file.Post("/add", handlers.AddFile)
 
 	subject.Post("/add", handlers.AddSubject)
-	subject.Put("/:subjectID", handlers.UpdateSubject)
-	subject.Delete("/:subjectID", handlers.DeleteSubject)
+	subject.Put("/update/:subjectID", handlers.UpdateSubject)
+	subject.Delete("/delete/:subjectID", handlers.DeleteSubject)
 
 	teacher.Post("/add", handlers.AddTeacher)
-	teacher.Put("/:teacherID", handlers.UpdateTeacher)
-	teacher.Delete("/:teacherID", handlers.DeleteTeacher)
+	teacher.Put("/update/:teacherID", handlers.UpdateTeacher)
+	teacher.Delete("/delete/:teacherID", handlers.DeleteTeacher)
 
 	teacherSubject.Post("/add", handlers.AddTeacherSubjects)
-	teacherSubject.Put("/:teacherSubjectID", handlers.UpdateTeacherSubject)
-	teacherSubject.Delete("/:teacherSubjectID", handlers.DeleteTeacherSubject)
+	teacherSubject.Put("/update/:teacherSubjectID", handlers.UpdateTeacherSubject)
+	teacherSubject.Delete("/delete/:teacherSubjectID", handlers.DeleteTeacherSubject)
 
 }

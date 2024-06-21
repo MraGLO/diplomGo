@@ -7,14 +7,10 @@ func (d *DatabaseRepo) DeleteSubject(id int) (count int, err error) {
 	if err != nil {
 		return
 	}
-
 	count = int(com.RowsAffected())
 	return
 }
 
-//Созадать каскадное удаление с таблицей teacher_subject
-//DELETE FROM some_child_table WHERE some_fk_field IN (SELECT some_id FROM some_Table);
-//DELETE FROM some_table;
 func (d *DatabaseRepo) DeleteTeacher(id int) (count int, err error) {
 	com, err := d.db.Exec(context.Background(), "DELETE FROM teacher WHERE id = $1", id)
 	if err != nil {
@@ -31,6 +27,60 @@ func (d *DatabaseRepo) DeleteTeacherSubject(id int) (count int, err error) {
 		return
 	}
 
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeleteRecord(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM record WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeleteTableFile(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM table_file WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeleteGroupRecords(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM group_records WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeletePricingTable(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM pricing_table WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeletePricingRecord(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM pricing_record WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeleteTeacherPricingRecord(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM teacher_pricing_record WHERE id = $1", id)
+	if err != nil {
+		return
+	}
 	count = int(com.RowsAffected())
 	return
 }

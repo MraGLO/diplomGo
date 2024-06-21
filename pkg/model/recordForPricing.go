@@ -1,8 +1,8 @@
 package model
 
 type RecordForPricing struct {
-	GroupName       string `json:"groupname"`
-	SubjectName     string `json:"subjectname"`
-	TimeSemesterOwn string `json:"timesemesterown"`
-	TimeSemesterTwo string `json:"timesemestertwo"`
+	GroupName       string `json:"groupName"`
+	SubjectName     string `json:"subjectName"`
+	TimeSemesterOwn string `json:"timeSemesterOwn"`
+	TimeSemesterTwo string `json:"timeSemesterTwo"`
 }

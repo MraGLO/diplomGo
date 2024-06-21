@@ -30,10 +30,13 @@ func (s *Services) AddGroupRecords(groupRecords model.GroupRecords) error {
 	return s.Database.db.InsertGroupRecords(&groupRecords)
 }
 
-// func (s *Services) AddTableFileGroups(tableFileGroup model.TableFileGroup) error {
-// 	return s.Database.db.InsertTableFileGroups(&tableFileGroup)
-// }
-
 func (s *Services) AddPricingTable(pricingTable model.PricingTable) (int, error) {
 	return s.Database.db.InsertPricingTable(&pricingTable)
+}
+
+func (s *Services) AddPricingRecord(pricingRecord model.PricingRecord) (int, error) {
+	return s.Database.db.InsertPricingRecord(&pricingRecord)
+}
+func (s *Services) AddTeacherPricingRecord(teacherPricingRecord model.TeacherPricingRecord) error {
+	return s.Database.db.InsertTeacherPricingRecord(&teacherPricingRecord)
 }

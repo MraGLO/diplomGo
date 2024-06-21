@@ -1,23 +1,27 @@
-import { sendData } from './server.js';
+import { sendDataPut } from './server.js';
 
 window.onload = function() {
-    document.getElementById('btnAdd').addEventListener('click', function(event) {
+    document.getElementById('btnE').addEventListener('click', function(event) {
       event.preventDefault();
       // Функционал обработки клика
 
       const publicationForm = document.querySelector('.container');
 
       // Собираем данные из формы в объект
-      const formDataObj = {};
+      
 
       // Сбор данных из формы
       const formData = new FormData(publicationForm);
-      for (let [key, value] of formData.entries()) {
-          formDataObj[key] = value;
-      }
+      const formDataObj = {
+        ID: parseInt(formData.get('ID'), 10),
+        subjectName: formData.get('subjectName')
+      };
+
+      const textField = document.getElementById('id-input');
+      const value = textField.value;
 
       // Отправляем данные на сервер
-      sendData("/subject/add", formDataObj)
+      sendDataPut(`/subject/update/${value}`, formDataObj)
       .then(() => {
           publicationForm.reset();
       })

@@ -69,12 +69,6 @@ func (d *DatabaseRepo) InsertGroupRecords(groupRecords *model.GroupRecords) (err
 	return
 }
 
-// func (d *DatabaseRepo) InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error) {
-// 	_, err = d.db.Exec(context.Background(), "INSERT INTO table_file_groups(group_id, table_file_id) VALUES($1, $2)",
-// 		tableFileGroup.GroupID, tableFileGroup.TableFileID)
-// 	return
-// }
-
 func (d *DatabaseRepo) InsertPricingTable(pricingTable *model.PricingTable) (id int, err error) {
 	row, err := d.db.Query(context.Background(), "INSERT INTO pricing_table(name, date) VALUES($1, $2) RETURNING id",
 		pricingTable.Name, pricingTable.Date)
@@ -90,5 +84,29 @@ func (d *DatabaseRepo) InsertPricingTable(pricingTable *model.PricingTable) (id 
 			return
 		}
 	}
+	return
+}
+
+func (d *DatabaseRepo) InsertPricingRecord(pricingRecord *model.PricingRecord) (id int, err error) {
+	row, err := d.db.Query(context.Background(), "INSERT INTO pricing_record(group_id, first_half_year, second_half_year, theory, practice, LPZ_1, LPZ_2, consultation, course_project, hours_first_semester, hours_second_semester, total, pricing_table_id, subject_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id",
+		pricingRecord.GroupID, pricingRecord.FirstHalfYear, pricingRecord.SecondHalfYear, pricingRecord.Theory, pricingRecord.Practice, pricingRecord.LPZ1, pricingRecord.LPZ2, pricingRecord.Consultation, pricingRecord.CourseProject, pricingRecord.HoursFirstSemester, pricingRecord.HoursSecondSemester, pricingRecord.Total, pricingRecord.PricingTableID, pricingRecord.SubjectID)
+
+	if err != nil {
+		return
+	}
+	defer row.Close()
+
+	for row.Next() {
+		err = row.Scan(&id)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func (d *DatabaseRepo) InsertTeacherPricingRecord(teacherPricingRecord *model.TeacherPricingRecord) (err error) {
+	_, err = d.db.Exec(context.Background(), "INSERT INTO teacher_pricing_record(teacher_id, pricing_record_id) VALUES($1, $2)",
+		teacherPricingRecord.TeacherID, teacherPricingRecord.PricingRecordID)
 	return
 }

@@ -1,7 +1,7 @@
 package model
 
 type TeacherSubject struct {
-	ID        int `json:"id"`
-	TeacherID int `json:"teacherid"`
-	SubjectID int `json:"subjectid"`
+	ID        int `json:"ID"`
+	TeacherID int `json:"teacherID"`
+	SubjectID int `json:"subjectID"`
 }

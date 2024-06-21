@@ -37,16 +37,29 @@ type Database interface {
 	InsertRecord(record *model.Record) (id int, err error)
 	InsertGroupRecords(groupRecords *model.GroupRecords) (err error)
 	InsertTableFile(tableFile *model.TableFile) (id int, err error)
-	// InsertTableFileGroups(tableFileGroup *model.TableFileGroup) (err error)
 	InsertPricingTable(pricingTable *model.PricingTable) (id int, err error)
+	InsertTeacherPricingRecord(teacherPricingRecord *model.TeacherPricingRecord) (err error)
+	InsertPricingRecord(pricingRecord *model.PricingRecord) (id int, err error)
 
-	UpdateSubject(id int, subject *model.Subject) (err error)
+	UpdateSubject(id int, subject model.Subject) (err error)
 	UpdateTeacher(id int, teacher model.Teacher) (err error)
 	UpdateTeacherSubject(id int, teacherSubject model.TeacherSubject) (err error)
+	UpdateRecord(id int, record model.Record) (err error)
+	UpdateTableFile(id int, tableFile model.TableFile) (err error)
+	UpdateGroupRecords(id int, groupRecords model.GroupRecords) (err error)
+	UpdatePricingTable(id int, pricingTable model.PricingTable) (err error)
+	UpdatePricingRecord(id int, pricingRecord model.PricingRecord) (err error)
+	UpdateTeacherPricingRecord(id int, teacherPricingRecord model.TeacherPricingRecord) (err error)
 
 	DeleteSubject(id int) (count int, err error)
 	DeleteTeacher(id int) (count int, err error)
 	DeleteTeacherSubject(id int) (count int, err error)
+	DeleteRecord(id int) (count int, err error)
+	DeleteTableFile(id int) (count int, err error)
+	DeleteGroupRecords(id int) (count int, err error)
+	DeletePricingTable(id int) (count int, err error)
+	DeletePricingRecord(id int) (count int, err error)
+	DeleteTeacherPricingRecord(id int) (count int, err error)
 }
 
 type Repository struct {
