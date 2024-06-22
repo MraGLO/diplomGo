@@ -223,24 +223,6 @@ func (d *DatabaseRepo) SelectTableFilesByID(id int) (tableFile model.TableFile, 
 	return
 }
 
-// func (d *DatabaseRepo) SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error) {
-// 	var tmp model.TableFileGroup
-// 	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, table_file_id FROM table_file_groups WHERE table_file_id = $1", tableFileID)
-// 	if err != nil {
-// 		return
-// 	}
-// 	defer rows.Close()
-
-// 	for rows.Next() {
-// 		err = rows.Scan(&tmp.ID, &tmp.GroupID, &tmp.TableFileID)
-// 		if err != nil {
-// 			return
-// 		}
-// 		TableFileGroup = append(TableFileGroup, tmp)
-// 	}
-// 	return
-// }
-
 func (d *DatabaseRepo) SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error) {
 	var tmp model.GroupRecords
 	rows, err := d.db.Query(context.Background(), "SELECT id, group_id, record_id FROM group_records WHERE group_id = $1", groupID)
@@ -307,6 +289,24 @@ func (d *DatabaseRepo) SelectAllRecordForPricingFromPriceView(tableFileID int, t
 			return
 		}
 		recordForPricing = append(recordForPricing, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectSubjectsFromTeacherSubjectViewByTeacherID(teacherID int) (subjects []model.Subject, err error) {
+	var tmp model.Subject
+	rows, err := d.db.Query(context.Background(), "SELECT subject_id, subject_name FROM public.teacher_subject_view WHERE teacher_id = $1", teacherID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.SubjectName)
+		if err != nil {
+			return
+		}
+		subjects = append(subjects, tmp)
 	}
 	return
 }

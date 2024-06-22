@@ -1,4 +1,4 @@
-import { sendDataDelete } from './server.js';
+import { sendIDDelete } from './server.js';
 
 window.onload = function() {
     document.getElementById('btnE').addEventListener('click', function(event) {
@@ -10,7 +10,7 @@ window.onload = function() {
       const value = textField.value;
 
       // Отправляем данные на сервер
-      sendDataDelete(`/subject/delete/${value}`)
+      sendIDDelete(`/subject/delete/${value}`)
       .then(() => {
           publicationForm.reset();
       })

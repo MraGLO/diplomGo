@@ -9,6 +9,8 @@ import (
 func PublicRoutes(router *fiber.App, handlers *http.Handlers) {
 	router.Static("/subject", "../pages/subject")
 	router.Static("/teacher", "../pages/teacher")
+	router.Static("/table_file", "../pages/table_file")
+	router.Static("/teacher_subject", "../pages/teacher_subject")
 	router.Static("/", "../pages/main_page")
 	router.Static("/", "../pages")
 	router.Static("/pricing", "../pages/pricing")

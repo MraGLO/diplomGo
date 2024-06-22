@@ -140,3 +140,34 @@ func (h *Handlers) GetTableFileById(c *fiber.Ctx) error {
 
 	return c.JSON(tableFiles)
 }
+
+func (h *Handlers) DeleteTableFile(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("TableFileID")
+	if err != nil {
+		log.Println(err)
+		c.Status(400)
+		return c.JSON(model.Error{Data: "id должно быть числом больше 0"})
+	}
+
+	if id <= 0 {
+		log.Println("id <=0")
+		c.Status(400)
+		return c.JSON(model.Error{Data: "id не может быть меньше или равно 0"})
+	}
+
+	found, err := h.services.DeleteTableFile(id)
+	if err != nil {
+		log.Println(err)
+		c.Status(500)
+		return c.JSON(model.Error{Data: "Невозможно обратиться к серверу"})
+	}
+
+	if !found {
+		log.Println(err)
+		c.Status(404)
+		return c.JSON(model.Error{Data: "Данных по данному id не существует"})
+	}
+
+	c.Status(200)
+	return c.JSON(model.Error{Data: "Успешно удалено"})
+}

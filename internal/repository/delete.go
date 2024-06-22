@@ -1,6 +1,9 @@
 package repository
 
-import "context"
+import (
+	"context"
+	"diplomGo/pkg/model"
+)
 
 func (d *DatabaseRepo) DeleteSubject(id int) (count int, err error) {
 	com, err := d.db.Exec(context.Background(), "DELETE FROM subject WHERE id = $1", id)
@@ -78,6 +81,15 @@ func (d *DatabaseRepo) DeletePricingRecord(id int) (count int, err error) {
 
 func (d *DatabaseRepo) DeleteTeacherPricingRecord(id int) (count int, err error) {
 	com, err := d.db.Exec(context.Background(), "DELETE FROM teacher_pricing_record WHERE id = $1", id)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeleteTeacherPricingRecordByData(teacherSubject model.TeacherSubject) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM teacher_subject WHERE teacher_id = $1 AND subject_id = $2", teacherSubject.TeacherID, teacherSubject.SubjectID)
 	if err != nil {
 		return
 	}

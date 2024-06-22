@@ -1,5 +1,7 @@
 package services
 
+import "diplomGo/pkg/model"
+
 func (s *Services) DeleteSubject(id int) (bool, error) {
 	countAffected, err := s.Database.db.DeleteSubject(id)
 	if err != nil || countAffected == 0 {
@@ -72,6 +74,15 @@ func (s *Services) DeletePricingRecord(id int) (bool, error) {
 
 func (s *Services) DeleteTeacherPricingRecord(id int) (bool, error) {
 	countAffected, err := s.Database.db.DeleteTeacherPricingRecord(id)
+	if err != nil || countAffected == 0 {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func (s *Services) DeleteTeacherSubjectByData(teacherSubject model.TeacherSubject) (bool, error) {
+	countAffected, err := s.Database.db.DeleteTeacherPricingRecordByData(teacherSubject)
 	if err != nil || countAffected == 0 {
 		return false, err
 	}

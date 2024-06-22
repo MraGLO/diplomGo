@@ -18,7 +18,7 @@ export async function parseData(url, selectName) {
                 <td>${item.patronymic}</td>
                 <td>${categoryEnum[item.category]}</td>
                 <td>
-                    <button type="button" class="btn btn-info" style="width: 100px; margin: 5px;">Предметы</a>
+                    <button type="button" class="btn btn-info get-teacher-btn-ts" style="width: 100px; margin: 5px;">Предметы</a>
                 </td>
                 <td>
                     <button type="button" class="btn btn-warning get-teacher-btn-u" style="width: 100px; margin: 5px;">Изменить</button>

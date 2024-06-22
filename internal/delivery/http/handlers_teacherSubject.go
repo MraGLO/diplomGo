@@ -136,3 +136,53 @@ func (h *Handlers) DeleteTeacherSubject(c *fiber.Ctx) error {
 	c.Status(200)
 	return c.JSON(model.Error{Data: "Успешно удалено"})
 }
+
+func (h *Handlers) GetTeacherSubjectViewById(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("teacherID"))
+	if err != nil {
+		log.Println(err)
+		c.Status(400)
+		return c.JSON(model.Error{Data: "id должно быть числом больше 0"})
+	}
+
+	if id <= 0 {
+		log.Println("id <=0")
+		c.Status(400)
+		return c.JSON(model.Error{Data: "id не может быть меньше или равно 0"})
+	}
+
+	subjects, err := h.services.GetASubjectsFromTeacherSubjectViewByTeacherID(id)
+	if err != nil {
+		log.Println(err)
+		c.Status(500)
+		return c.JSON(model.Error{Data: "Невозможно обратиться к серверу"})
+	}
+	return c.JSON(subjects)
+}
+
+func (h *Handlers) DeleteTeacherSubjectByData(c *fiber.Ctx) error {
+	var teacherSubject model.TeacherSubject
+
+	err := json.Unmarshal(c.Body(), &teacherSubject)
+	if err != nil {
+		log.Println(err)
+		c.Status(400)
+		return c.JSON(model.Error{Data: "ошибка в отправленном json"})
+	}
+
+	found, err := h.services.DeleteTeacherSubjectByData(teacherSubject)
+	if err != nil {
+		log.Println(err)
+		c.Status(500)
+		return c.JSON(model.Error{Data: "Невозможно обратиться к серверу"})
+	}
+
+	if !found {
+		log.Println(err)
+		c.Status(404)
+		return c.JSON(model.Error{Data: "Данных по данному id не существует"})
+	}
+
+	c.Status(200)
+	return c.JSON(model.Error{Data: "Успешно удалено"})
+}

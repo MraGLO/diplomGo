@@ -20,8 +20,8 @@ type Database interface {
 	SelectTableFilesByID(id int) (tableFile model.TableFile, err error)
 	SelectAllTableFiles() (tableFile []model.TableFile, err error)
 
-	// SelectAllTableFileGroupsByTableFileID(tableFileID int) (TableFileGroup []model.TableFileGroup, err error)
 	SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error)
+	SelectSubjectsFromTeacherSubjectViewByTeacherID(teacherID int) (subjects []model.Subject, err error)
 
 	SelectIDBySubject(subj string) (id int, err error)
 	SelectIDByTeacherSurname(surname string) (id int, err error)
@@ -60,6 +60,7 @@ type Database interface {
 	DeletePricingTable(id int) (count int, err error)
 	DeletePricingRecord(id int) (count int, err error)
 	DeleteTeacherPricingRecord(id int) (count int, err error)
+	DeleteTeacherPricingRecordByData(teacherSubject model.TeacherSubject) (count int, err error)
 }
 
 type Repository struct {

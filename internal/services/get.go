@@ -70,3 +70,7 @@ func (s *Services) GetAllTeachersFromPriceView(tableFileID int) ([]model.Teacher
 func (s *Services) GetAllRecordForPricingFromPriceView(tableFileID int, teacherID int) ([]model.RecordForPricing, error) {
 	return s.Database.db.SelectAllRecordForPricingFromPriceView(tableFileID, teacherID)
 }
+
+func (s *Services) GetASubjectsFromTeacherSubjectViewByTeacherID(teacherID int) ([]model.Subject, error) {
+	return s.Database.db.SelectSubjectsFromTeacherSubjectViewByTeacherID(teacherID)
+}
