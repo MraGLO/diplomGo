@@ -10,10 +10,10 @@ export async function parseData(url, selectName) {
                 <td>${item.ID}</td>
                 <td>${item.subjectName}</td>
                 <td>
-                    <button type="button" class="btn btn-warning get-value-btn-u" href="update.html" style="width: 100px; margin: 5px;">Изменить</button>
+                    <button type="button" class="btn btn-warning get-subject-btn-u" href="update.html" style="width: 100px; margin: 5px;">Изменить</button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger get-value-btn-d" href="delete.html" style="width: 100px; margin: 5px;">Удалить</button>
+                    <button type="button" class="btn btn-danger get-suvject-btn-d" href="delete.html" style="width: 100px; margin: 5px;">Удалить</button>
                 </td>
             </tr>
         `);

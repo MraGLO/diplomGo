@@ -28,19 +28,19 @@
         <form class="container" method="get" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Имя</label>
-                <input class="form-control">
+                <input name ="name" class="form-control">
                 <label for="exampleFormControlInput1" class="form-label">Фамилия</label>
-                <input class="form-control">
+                <input name="surname" class="form-control">
                 <label for="exampleFormControlInput1" class="form-label">Отчество</label>
-                <input class="form-control">
+                <input name="patronymic" class="form-control">
                 <label for="exampleFormControlInput1" class="form-label">Категория</label>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" id="category-select">
                     <option selected value="1">Нет</option>
                     <option value="2">Первая</option>
                     <option value="3">Высшая</option>
                   </select>
             </div>
-                <button class="btn btn-primary">Добавить</button>
+                <button class="btn btn-primary" id="btnE">Добавить</button>
                 <a class="btn btn-secondary" href="get.html">Назад</a>
         </form>
         <div class="alert-container d-flex align-items-start flex-column" style="margin-top: 50px; margin-left: 20px; display:inline-block;">
@@ -48,4 +48,5 @@
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="../scripts/addTeacher.js"></script>
 </html>

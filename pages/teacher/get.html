@@ -24,9 +24,10 @@
           
         <div class="h1 d-flex align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 20px;">Преподаватели</div>
         <div data-bs-spy="scroll" style="margin-left: 50px; margin-right: 50px;">
-            <table class="table">
+            <table class="table" id="my-table">
                 <thead>
                   <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Имя</th>
                     <th scope="col">Фамилия</th>
                     <th scope="col">Отчество</th>
@@ -37,53 +38,21 @@
                     <th scope="col" style="width: 120px;"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody name="allTeacher">
                   <tr>
+                    <td>1</td>
                     <td>Калмыкова</td>
                     <td>Алиса</td>
                     <td>Дмитриевна</td>
                     <td>Первая</td>
                     <td>
-                        <a type="button" class="btn btn-warning" href="update.html" style="width: 100px; margin: 5px;">Изменить</a>
+                        <button type="button" class="btn btn-info" style="width: 100px; margin: 5px;">Предметы</a>
                     </td>
                     <td>
-                        <a type="button" class="btn btn-danger" href="delete.html" style="width: 100px; margin: 5px;">Удалить</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Кондрашов</td>
-                    <td>Алексей</td>
-                    <td>Григорьевич</td>
-                    <td>Нет</td>
-                    <td>
-                        <a type="button" class="btn btn-warning" href="update.html" style="width: 100px; margin: 5px;">Изменить</a>
+                        <button type="button" class="btn btn-warning get-teacher-btn-u" style="width: 100px; margin: 5px;">Изменить</button>
                     </td>
                     <td>
-                        <a type="button" class="btn btn-danger" href="delete.html" style="width: 100px; margin: 5px;">Удалить</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Сергеева</td>
-                    <td>Валерия</td>
-                    <td>Николаевна</td>
-                    <td>Высшая</td>
-                    <td>
-                        <a type="button" class="btn btn-warning" href="update.html" style="width: 100px; margin: 5px;">Изменить</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-danger" href="delete.html" style="width: 100px; margin: 5px;">Удалить</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Фролова</td>
-                    <td>Марианна</td>
-                    <td>Максимовна</td>
-                    <td>Первая</td>
-                    <td>
-                        <a type="button" class="btn btn-warning" href="update.html" style="width: 100px; margin: 5px;">Изменить</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-danger" href="delete.html" style="width: 100px; margin: 5px;">Удалить</a>
+                        <button type="button" class="btn btn-danger get-teacher-btn-d"  style="width: 100px; margin: 5px;">Удалить</button>
                     </td>
                   </tr>
                 </tbody>
@@ -91,4 +60,7 @@
         </div>    
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="../scripts/getAllTeacher.js"></script>
+    <script type="module" src="../scripts/teacherTransferUpdate.js"></script>
+    <script type="module" src="../scripts/teacherTransferDelete.js"></script>
 </html>

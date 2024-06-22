@@ -2,7 +2,7 @@ const table = document.getElementById('my-table');
 
 // Add event listener to each "Get Value" button
 table.addEventListener('click', (e) => {
-  if (e.target.classList.contains('get-value-btn-u')) {
+  if (e.target.classList.contains('get-subject-btn-u')) {
     const row = e.target.parentElement.parentElement;
     const cells = row.cells;
 
