@@ -2,7 +2,7 @@ const publicationForm = document.querySelector('.container');
 publicationForm.addEventListener('submit', e => {
         e.preventDefault();
 
-        let excel = document.getElementById("file").files[0];
+        let excel = document.getElementById("customFile").files[0];
         let formData = new FormData();
                 
         formData.append("excel", excel);
