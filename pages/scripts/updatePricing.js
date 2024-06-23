@@ -12,28 +12,16 @@ window.onload = function() {
 
       // Сбор данных из формы
       const formData = new FormData(publicationForm);
-
-      const select = document.getElementById('category-select');
-      const selectedOptions = select.selectedOptions;
-      var optionValue
-    
-      for (const option of selectedOptions) {
-        optionValue = option.value;
-      }
-
       const formDataObj = {
         ID: parseInt(formData.get('ID'), 10),
-        surname: formData.get('surname'),
-        name: formData.get('name'),
-        patronymic: formData.get('patronymic'),
-        category: parseInt(optionValue, 10)
+        Name: formData.get('name')
       };
 
       const textField = document.getElementById('id-input');
       const value = textField.value;
 
       // Отправляем данные на сервер
-      sendDataPut(`/teacher/update/${value}`, formDataObj)
+      sendDataPut(`/pricing/update/${value}`, formDataObj)
       .then(() => {
         window.location.href = 'get.html';
       })

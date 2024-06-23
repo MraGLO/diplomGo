@@ -19,7 +19,7 @@ window.onload = function() {
       // Отправляем данные на сервер
       sendDataPost("/subject/add", formDataObj)
       .then(() => {
-          publicationForm.reset();
+        window.location.href = 'get.html';
       })
       .catch((err) => {
           console.log(err);

@@ -23,51 +23,28 @@
             </div>
           </nav>
           
-        <div class="h1 d-flex align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 20px;">Тарификация 1</div>
+        <div class="h1 d-flex align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 20px;" id="title"></div>
         <div data-bs-spy="scroll" style="margin-left: 50px; margin-right: 50px;">
-            <table class="table" >
+            <table class="table" id="my-table">
                 <thead>
                   <tr>
+                    <th scope="col" style="width: 40px;">#</th>
                     <th scope="col">ФИО преподавателя</th>
-                    <th scope="col" style="width: 120px;">Категория</th>
                     <th scope="col" style="width: 120px;">
-                        <a type="button" class="btn btn-primary" href="addSubject.html" style="width: 100px; margin: 5px;">Добавить</a>
                     </th>
-                    <th scope="col" style="width: 120px;"></th>
-                    <th scope="col" style="width: 120px;"></th>
-                    <th scope="col" style="width: 120px;"></th>
+                    <th scope="col" style="width: 120px;">
+                        <a type="button" class="btn btn-primary" href="add.html" style="width: 100px; margin: 5px;">Добавить</a>
+                    </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>Сергеева Валерия Николаевна</td>
-                    <td>Высшая</td>
-                    <td>
-                        <a type="button" class="btn btn-info" href="/pricing_teacher_records/get.html" style="width: 100px; margin: 5px;">Данные</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-warning" href="update.html" style="width: 100px; margin: 5px;">Изменить</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-danger" href="delete.html" style="width: 100px; margin: 5px;">Удалить</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Фролова Марианна Максимовна</td>
-                    <td>Первая</td>
-                    <td>
-                        <a type="button" class="btn btn-info" href="/pricing_teacher_records/get.html" style="width: 100px; margin: 5px;">Данные</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-warning" href="update.html" style="width: 100px; margin: 5px;">Изменить</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-danger" href="delete.html" style="width: 100px; margin: 5px;">Удалить</a>
-                    </td>
-                  </tr>
+                <tbody name="allPricingTeacher">
+
                 </tbody>
               </table>
         </div>    
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="../scripts/getAllPricingTeacher.js"></script>
+    <script type="module" src="../scripts/teacherPricingTransferPricingRecords.js"></script>
+    <script type="module" src="../scripts/teacherPricingTransferDelete.js"></script>
 </html>

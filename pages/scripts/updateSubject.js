@@ -23,7 +23,7 @@ window.onload = function() {
       // Отправляем данные на сервер
       sendDataPut(`/subject/update/${value}`, formDataObj)
       .then(() => {
-          publicationForm.reset();
+        window.location.href = 'get.html';
       })
       .catch((err) => {
           console.log(err);

@@ -2,6 +2,7 @@ import { getData } from './server.js';
 import { sendDataPost } from './server.js';
 
 const currentTeacher = JSON.parse(localStorage.getItem('currentTeacher'));
+document.getElementById('title').textContent = `Привязка предмета к ${currentTeacher.surname} ${currentTeacher.name} ${currentTeacher.patronymic}`;
 
 // Получаем список всех предметов
 async function getAllSubjects() {
@@ -49,7 +50,7 @@ async function fillSubjectSelect() {
       };
     sendDataPost("/teacherSubject/add", formDataObj)
     .then(() => {
-        publicationForm.reset();
+        window.location.href = 'get.html';
     })
     .catch((err) => {
         console.log(err);

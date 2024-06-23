@@ -20,8 +20,8 @@ window.onload = function() {
 
       const formDataObj = {
         ID: parseInt(formData.get('ID'), 10),
-        name: formData.get('name'),
         surname: formData.get('surname'),
+        name: formData.get('name'),
         patronymic: formData.get('patronymic'),
         category: parseInt(optionValue, 10)
       };
@@ -30,10 +30,12 @@ window.onload = function() {
       // Отправляем данные на сервер
       sendDataPost("/teacher/add", formDataObj)
       .then(() => {
-          publicationForm.reset();
+            window.location.href = 'get.html';
       })
       .catch((err) => {
           console.log(err);
       });
    });
+
+   
 }

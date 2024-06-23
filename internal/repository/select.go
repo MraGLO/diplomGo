@@ -39,6 +39,22 @@ func (d *DatabaseRepo) SelectSubjectByID(id int) (subject model.Subject, err err
 	return
 }
 
+func (d *DatabaseRepo) SelectFirstSubject() (subject model.Subject, err error) {
+	rows, err := d.db.Query(context.Background(), "SELECT id, name FROM subject LIMIT 1")
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&subject.ID, &subject.SubjectName)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
 func (d *DatabaseRepo) SelectIDBySubject(subj string) (id int, err error) {
 	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."subject" WHERE name = $1`, subj)
 	if err != nil {
@@ -173,6 +189,22 @@ func (d *DatabaseRepo) SelectGroupByID(id int) (group model.Group, err error) {
 	return
 }
 
+func (d *DatabaseRepo) SelectFirstGroup() (group model.Group, err error) {
+	rows, err := d.db.Query(context.Background(), `SELECT id, name FROM public."group" LIMIT 1`)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&group.ID, &group.Name)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
 func (d *DatabaseRepo) SelectIDByGroupName(groupName string) (id int, err error) {
 	rows, err := d.db.Query(context.Background(), `SELECT id FROM public."group" WHERE name = $1`, groupName)
 	if err != nil {
@@ -257,7 +289,7 @@ func (d *DatabaseRepo) SelectRecordByID(id int) (record model.Record, err error)
 	return
 }
 
-func (d *DatabaseRepo) SelectAllTeachersFromPriceView(tableFileID int) (teachers []model.Teacher, err error) {
+func (d *DatabaseRepo) SelectAllTeachersFromTableFileView(tableFileID int) (teachers []model.Teacher, err error) {
 	var tmp model.Teacher
 	rows, err := d.db.Query(context.Background(), "SELECT distinct teacher_id, teacher_name, teacher_surname, teacher_patronymic, teacher_category FROM public.table_file_view WHERE table_file_id = $1", tableFileID)
 	if err != nil {
@@ -275,20 +307,20 @@ func (d *DatabaseRepo) SelectAllTeachersFromPriceView(tableFileID int) (teachers
 	return
 }
 
-func (d *DatabaseRepo) SelectAllRecordForPricingFromPriceView(tableFileID int, teacherID int) (recordForPricing []model.RecordForPricing, err error) {
-	var tmp model.RecordForPricing
-	rows, err := d.db.Query(context.Background(), "SELECT group_name, subject_name, time_semester_one, time_semester_two FROM public.table_file_view WHERE table_file_id = $1 AND teacher_id = $2", tableFileID, teacherID)
+func (d *DatabaseRepo) SelectAllRecordForPricingFromTableFileView(tableFileID int, teacherID int) (recordForTableFileView []model.RecordForTableFileView, err error) {
+	var tmp model.RecordForTableFileView
+	rows, err := d.db.Query(context.Background(), "SELECT group_id, group_name, subject_id, subject_name, time_semester_one, time_semester_two FROM public.table_file_view WHERE table_file_id = $1 AND teacher_id = $2", tableFileID, teacherID)
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&tmp.GroupName, &tmp.SubjectName, &tmp.TimeSemesterOwn, &tmp.TimeSemesterTwo)
+		err = rows.Scan(&tmp.GroupID, &tmp.GroupName, &tmp.SubjectID, &tmp.SubjectName, &tmp.TimeSemesterOwn, &tmp.TimeSemesterTwo)
 		if err != nil {
 			return
 		}
-		recordForPricing = append(recordForPricing, tmp)
+		recordForTableFileView = append(recordForTableFileView, tmp)
 	}
 	return
 }
@@ -307,6 +339,60 @@ func (d *DatabaseRepo) SelectSubjectsFromTeacherSubjectViewByTeacherID(teacherID
 			return
 		}
 		subjects = append(subjects, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectAllPricingTable() (pricing []model.PricingTable, err error) {
+	var tmp model.PricingTable
+	rows, err := d.db.Query(context.Background(), "SELECT id, name, date FROM pricing_table")
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.Name, &tmp.Date)
+		if err != nil {
+			return
+		}
+		pricing = append(pricing, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectAllTeachersFromPricingTableView(pricinTableID int) (teachers []model.Teacher, err error) {
+	var tmp model.Teacher
+	rows, err := d.db.Query(context.Background(), "SELECT distinct teacher_id, teacher_name, teacher_surname, teacher_patronymic, teacher_category FROM public.pricing_table_view WHERE pricing_table_id = $1", pricinTableID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.Name, &tmp.Surname, &tmp.Patronymic, &tmp.Category)
+		if err != nil {
+			return
+		}
+		teachers = append(teachers, tmp)
+	}
+	return
+}
+
+func (d *DatabaseRepo) SelectAllTeacherPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct model.GetPricingTeacherStruct) (teacherPricingRecord []model.TeacherPricingRecord, err error) {
+	var tmp model.TeacherPricingRecord
+	rows, err := d.db.Query(context.Background(), "SELECT teacher_id, id FROM pricing_table_view WHERE teacher_id = $1 AND pricing_table_id = $2", pricingTeacherStruct.TeacherID, pricingTeacherStruct.PricingID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.TeacherID, &tmp.PricingRecordID)
+		if err != nil {
+			return
+		}
+		teacherPricingRecord = append(teacherPricingRecord, tmp)
 	}
 	return
 }

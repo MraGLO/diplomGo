@@ -12,7 +12,7 @@ window.onload = function() {
       // Отправляем данные на сервер
       sendIDDelete(`/subject/delete/${value}`)
       .then(() => {
-          publicationForm.reset();
+        window.location.href = 'get.html';
       })
       .catch((err) => {
           console.log(err);

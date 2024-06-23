@@ -2,21 +2,18 @@ const table = document.getElementById('my-table');
 
 // Add event listener to each "Get Value" button
 table.addEventListener('click', (e) => {
-  if (e.target.classList.contains('get-teacher-btn-ts')) {
+  if (e.target.classList.contains('get-pricing-table-btn-tt')) {
     const row = e.target.parentElement.parentElement;
     const cells = row.cells;
 
-    var teacher ={
+    var pricing ={
         id: cells[0].textContent,
-        name: cells[2].textContent,
-        surname: cells[1].textContent,
-        patronymic: cells[3].textContent
+        name: cells[1].textContent
     }
-    const id = cells[0].textContent;
 
     // Сохраняем текущего студента в localStorage
-    localStorage.setItem('currentTeacher', JSON.stringify(teacher));
+    localStorage.setItem('currentPricing', JSON.stringify(pricing));
     // Открываем страницу с предметами
-    window.location.href = '/teacher_subject/get.html';
+    window.location.href = '/pricing_teacher/get.html';
   }
 });

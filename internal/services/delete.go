@@ -82,7 +82,16 @@ func (s *Services) DeleteTeacherPricingRecord(id int) (bool, error) {
 }
 
 func (s *Services) DeleteTeacherSubjectByData(teacherSubject model.TeacherSubject) (bool, error) {
-	countAffected, err := s.Database.db.DeleteTeacherPricingRecordByData(teacherSubject)
+	countAffected, err := s.Database.db.DeleteTeacherSubjectByData(teacherSubject)
+	if err != nil || countAffected == 0 {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func (s *Services) DeleteTeacherPricingRecordByTeacherID(id int) (bool, error) {
+	countAffected, err := s.Database.db.DeleteTeacherPricingRecordByTeacherID(id)
 	if err != nil || countAffected == 0 {
 		return false, err
 	}

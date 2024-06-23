@@ -88,7 +88,7 @@ func (d *DatabaseRepo) InsertPricingTable(pricingTable *model.PricingTable) (id 
 }
 
 func (d *DatabaseRepo) InsertPricingRecord(pricingRecord *model.PricingRecord) (id int, err error) {
-	row, err := d.db.Query(context.Background(), "INSERT INTO pricing_record(group_id, first_half_year, second_half_year, theory, practice, LPZ_1, LPZ_2, consultation, course_project, hours_first_semester, hours_second_semester, total, pricing_table_id, subject_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id",
+	row, err := d.db.Query(context.Background(), `INSERT INTO pricing_record(group_id, first_half_year, second_half_year, theory, practice, "LPZ_1", "LPZ_2", consultation, course_project, hours_first_semester, hours_second_semester, total, pricing_table_id, subject_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id`,
 		pricingRecord.GroupID, pricingRecord.FirstHalfYear, pricingRecord.SecondHalfYear, pricingRecord.Theory, pricingRecord.Practice, pricingRecord.LPZ1, pricingRecord.LPZ2, pricingRecord.Consultation, pricingRecord.CourseProject, pricingRecord.HoursFirstSemester, pricingRecord.HoursSecondSemester, pricingRecord.Total, pricingRecord.PricingTableID, pricingRecord.SubjectID)
 
 	if err != nil {

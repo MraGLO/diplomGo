@@ -11,6 +11,7 @@ type Database interface {
 	SelectAllTeachers() (teachers []model.Teacher, err error)
 	SelectAllTeacherSubject() (teacherSubject []model.TeacherSubject, err error)
 	SelectAllGroups() (groups []model.Group, err error)
+	SelectAllPricingTable() (pricing []model.PricingTable, err error)
 
 	SelectSubjectByID(id int) (subject model.Subject, err error)
 	SelectTeacherByID(id int) (teacher model.Teacher, err error)
@@ -22,13 +23,18 @@ type Database interface {
 
 	SelectAllGroupRecordsByGroupID(groupID int) (groupRecords []model.GroupRecords, err error)
 	SelectSubjectsFromTeacherSubjectViewByTeacherID(teacherID int) (subjects []model.Subject, err error)
+	SelectAllTeacherPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct model.GetPricingTeacherStruct) (teacherPricingRecord []model.TeacherPricingRecord, err error)
 
 	SelectIDBySubject(subj string) (id int, err error)
 	SelectIDByTeacherSurname(surname string) (id int, err error)
 	SelectIDByGroupName(groupName string) (id int, err error)
 
-	SelectAllTeachersFromPriceView(tableFileID int) (teachers []model.Teacher, err error)
-	SelectAllRecordForPricingFromPriceView(tableFileID int, teacherID int) (recordForPricing []model.RecordForPricing, err error)
+	SelectAllTeachersFromTableFileView(tableFileID int) (teachers []model.Teacher, err error)
+	SelectAllRecordForPricingFromTableFileView(tableFileID int, teacherID int) (recordForTableFileView []model.RecordForTableFileView, err error)
+	SelectAllTeachersFromPricingTableView(pricinTableID int) (teachers []model.Teacher, err error)
+
+	SelectFirstSubject() (subject model.Subject, err error)
+	SelectFirstGroup() (group model.Group, err error)
 
 	InsertSubject(subject *model.Subject) (err error)
 	InsertTeacher(teacher *model.Teacher) (err error)
@@ -60,7 +66,8 @@ type Database interface {
 	DeletePricingTable(id int) (count int, err error)
 	DeletePricingRecord(id int) (count int, err error)
 	DeleteTeacherPricingRecord(id int) (count int, err error)
-	DeleteTeacherPricingRecordByData(teacherSubject model.TeacherSubject) (count int, err error)
+	DeleteTeacherSubjectByData(teacherSubject model.TeacherSubject) (count int, err error)
+	DeleteTeacherPricingRecordByTeacherID(id int) (count int, err error)
 }
 
 type Repository struct {

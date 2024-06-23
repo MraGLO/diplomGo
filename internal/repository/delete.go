@@ -88,8 +88,17 @@ func (d *DatabaseRepo) DeleteTeacherPricingRecord(id int) (count int, err error)
 	return
 }
 
-func (d *DatabaseRepo) DeleteTeacherPricingRecordByData(teacherSubject model.TeacherSubject) (count int, err error) {
+func (d *DatabaseRepo) DeleteTeacherSubjectByData(teacherSubject model.TeacherSubject) (count int, err error) {
 	com, err := d.db.Exec(context.Background(), "DELETE FROM teacher_subject WHERE teacher_id = $1 AND subject_id = $2", teacherSubject.TeacherID, teacherSubject.SubjectID)
+	if err != nil {
+		return
+	}
+	count = int(com.RowsAffected())
+	return
+}
+
+func (d *DatabaseRepo) DeleteTeacherPricingRecordByTeacherID(id int) (count int, err error) {
+	com, err := d.db.Exec(context.Background(), "DELETE FROM teacher_pricing_record WHERE teacher_id = $1", id)
 	if err != nil {
 		return
 	}

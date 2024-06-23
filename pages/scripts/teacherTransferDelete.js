@@ -12,8 +12,8 @@ table.addEventListener('click', (e) => {
       };
     // Get the values of the ID and Name columns
     const id = cells[0].textContent;
-    const name = cells[1].textContent;
-    const surname = cells[2].textContent;
+    const name = cells[2].textContent;
+    const surname = cells[1].textContent;
     const patronymic = cells[3].textContent;
     const category = cells[4].textContent;
 

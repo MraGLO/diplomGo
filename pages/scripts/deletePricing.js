@@ -10,7 +10,7 @@ window.onload = function() {
       const value = textField.value;
 
       // Отправляем данные на сервер
-      sendIDDelete(`/tableFile/delete/${value}`)
+      sendIDDelete(`/pricing/delete/${value}`)
       .then(() => {
         window.location.href = 'get.html';
       })

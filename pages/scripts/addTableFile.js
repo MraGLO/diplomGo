@@ -9,4 +9,5 @@ publicationForm.addEventListener('submit', e => {
 
         let r = fetch('/tableFile/add', {method: "POST", body: formData}); 
         console.log('HTTP response code:',r.status);
+        window.location.href = 'get.html';
 });
