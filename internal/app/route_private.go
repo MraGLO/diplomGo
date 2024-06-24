@@ -25,6 +25,7 @@ func PrivateRoutes(router *fiber.App, handlers *http.Handlers) {
 	tableFile := router.Group("/tableFile")
 	pricing := router.Group("/pricing")
 	pricingTeacher := router.Group("/pricingTeacher")
+	pricingTeacherRecord := router.Group("/pricingTeacherRecord")
 
 	tableFile.Post("/add", handlers.AddFile)
 	tableFile.Delete("delete/:TableFileID", handlers.DeleteTableFile)
@@ -48,4 +49,6 @@ func PrivateRoutes(router *fiber.App, handlers *http.Handlers) {
 
 	pricingTeacher.Post("/add", handlers.AddPricingTeacher)
 	pricingTeacher.Delete("/delete", handlers.DeleteTeacherPricingByTeacherId)
+
+	pricingTeacherRecord.Post("/all", handlers.GetTeacherPricingRecords)
 }

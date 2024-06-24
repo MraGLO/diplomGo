@@ -396,3 +396,21 @@ func (d *DatabaseRepo) SelectAllTeacherPricingRecordFromPricingTAbleViewByData(p
 	}
 	return
 }
+
+func (d *DatabaseRepo) SelectAllPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct model.GetPricingTeacherStruct) (pricingRecordView []model.PricingRecordView, err error) {
+	var tmp model.PricingRecordView
+	rows, err := d.db.Query(context.Background(), `SELECT id, group_name, first_half_year, second_half_year, theory, practice, "LPZ_1", "LPZ_2", consultation, course_project, hours_first_semester, hours_second_semester, total, subject_name FROM pricing_table_view WHERE teacher_id = $1 AND pricing_table_id = $2`, pricingTeacherStruct.TeacherID, pricingTeacherStruct.PricingID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&tmp.ID, &tmp.Group, &tmp.FirstHalfYear, &tmp.SecondHalfYear, &tmp.Theory, &tmp.Practice, &tmp.LPZ1, &tmp.LPZ2, &tmp.Consultation, &tmp.CourseProject, &tmp.HoursFirstSemester, &tmp.HoursSecondSemester, &tmp.Total, &tmp.Subject)
+		if err != nil {
+			return
+		}
+		pricingRecordView = append(pricingRecordView, tmp)
+	}
+	return
+}

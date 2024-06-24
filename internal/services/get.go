@@ -87,3 +87,7 @@ func (s *Services) GetAllTeachersFromPricingTableView(pricinTableID int) ([]mode
 func (s *Services) GetAllTeacherPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct model.GetPricingTeacherStruct) ([]model.TeacherPricingRecord, error) {
 	return s.Database.db.SelectAllTeacherPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct)
 }
+
+func (s *Services) GetAllPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct model.GetPricingTeacherStruct) ([]model.PricingRecordView, error) {
+	return s.Database.db.SelectAllPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct)
+}

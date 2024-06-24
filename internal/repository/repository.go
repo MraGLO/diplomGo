@@ -32,6 +32,7 @@ type Database interface {
 	SelectAllTeachersFromTableFileView(tableFileID int) (teachers []model.Teacher, err error)
 	SelectAllRecordForPricingFromTableFileView(tableFileID int, teacherID int) (recordForTableFileView []model.RecordForTableFileView, err error)
 	SelectAllTeachersFromPricingTableView(pricinTableID int) (teachers []model.Teacher, err error)
+	SelectAllPricingRecordFromPricingTAbleViewByData(pricingTeacherStruct model.GetPricingTeacherStruct) (pricingRecordView []model.PricingRecordView, err error)
 
 	SelectFirstSubject() (subject model.Subject, err error)
 	SelectFirstGroup() (group model.Group, err error)
