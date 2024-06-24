@@ -9,7 +9,7 @@ export async function parseData(url, selectName) {
         selectElement.insertAdjacentHTML('beforeend', `
             <tr>
                 <td>${item.ID}</td>
-                <td>${item.name} ${item.surname} ${item.patronymic}</td>
+                <td>${item.surname} ${item.name} ${item.patronymic}</td>
                 <td>
                     <button type="button" class="btn btn-info get-pricing-teacher-btn-tr"  style="width: 100px; margin: 5px;">Данные</button>
                 </td>
